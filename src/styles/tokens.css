@@ -1,0 +1,68 @@
+/* Design tokens. Night by default; warm paper when the system is in light mode. */
+:root {
+  color-scheme: dark;
+
+  --bg: #14111f;
+  --bg-deep: #0e0c17;
+  --surface: #1d1a2b;
+  --surface-2: #272339;
+  --surface-3: #312c47;
+  --line: rgb(255 255 255 / 0.09);
+  --line-strong: rgb(255 255 255 / 0.18);
+  --text: #f4eee6;
+  --muted: #b9b0c9;
+  --accent: #ffbe76;
+  --accent-strong: #ffd3a1;
+  --on-accent: #2b1700;
+  --danger: #ff9d9d;
+  --track: rgb(255 255 255 / 0.12);
+  --shadow: 0 10px 30px rgb(0 0 0 / 0.35);
+
+  /* Each sound tints its pad with its own hue at these lightness levels. */
+  --tint-fill: 68%;
+  --tint-surface: 22%;
+  --glow-alpha: 0.4;
+
+  --radius-s: 12px;
+  --radius: 20px;
+  --radius-l: 28px;
+  --gutter: 16px;
+  --dock-height: 132px;
+
+  --font-ui: ui-rounded, "SF Pro Rounded", "Nunito", "Segoe UI Variable Text", "Segoe UI", system-ui,
+    sans-serif;
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+
+    --bg: #f7f1e8;
+    --bg-deep: #efe6d9;
+    --surface: #fffaf3;
+    --surface-2: #f3eadd;
+    --surface-3: #e9ddcc;
+    --line: rgb(60 40 20 / 0.1);
+    --line-strong: rgb(60 40 20 / 0.2);
+    --text: #2a2233;
+    --muted: #645a70;
+    --accent: #b04a12;
+    --accent-strong: #963c0b;
+    --on-accent: #fffaf3;
+    --danger: #b3261e;
+    --track: rgb(60 40 20 / 0.14);
+    --shadow: 0 10px 30px rgb(80 50 20 / 0.12);
+
+    --tint-fill: 42%;
+    --tint-surface: 14%;
+    --glow-alpha: 0.22;
+  }
+}
+
+@media (min-width: 900px) {
+  :root {
+    --gutter: 28px;
+    --dock-height: 96px;
+  }
+}

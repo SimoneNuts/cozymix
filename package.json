@@ -1,0 +1,54 @@
+{
+  "name": "cozymix",
+  "version": "1.0.0",
+  "description": "A cozy ambient sound mixer: rain, fire, a café, a night train and gentle noise. Local-first, offline, English and Italian.",
+  "homepage": "https://simonenuts.github.io/cozymix/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SimoneNuts/cozymix.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SimoneNuts/cozymix/issues"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ambient",
+    "sound-mixer",
+    "white-noise",
+    "web-audio",
+    "pwa",
+    "nextjs",
+    "focus",
+    "sleep"
+  ],
+  "private": true,
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build && node scripts/postbuild.mjs",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test \"tests/unit/*.test.ts\"",
+    "test:e2e": "playwright test",
+    "icons": "node scripts/make-icons.mjs",
+    "preview": "node scripts/serve.mjs"
+  },
+  "dependencies": {
+    "next": "^16.3.8",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.3.8",
+    "typescript": "^6.0.3"
+  }
+}
