@@ -10,6 +10,7 @@ export type SoundId =
   | "thunder"
   | "wind"
   | "waves"
+  | "stream"
   | "fireplace"
   | "cafe"
   | "train"
@@ -103,6 +104,19 @@ export const sounds: readonly Sound[] = [
     hue: 194,
     defaultVolume: 0.5,
     credit: original,
+  },
+  {
+    id: "stream",
+    kind: "loop",
+    file: "/audio/stream.mp3",
+    crossfade: 3,
+    hue: 105,
+    defaultVolume: 0.6,
+    credit: {
+      author: "FractalStudios",
+      license: "CC0 1.0",
+      url: "https://commons.wikimedia.org/wiki/File:363120_fractalstudios_water-trickle.wav",
+    },
   },
   {
     id: "fireplace",

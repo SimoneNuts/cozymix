@@ -23,8 +23,9 @@ const en = {
   sounds: {
     rain: { name: "Rain", hint: "On the window" },
     thunder: { name: "Thunder", hint: "Now and then, far away" },
-    wind: { name: "Wind", hint: "Through the grass" },
+    wind: { name: "Wind", hint: "Through the pines" },
     waves: { name: "Waves", hint: "A quiet shore" },
+    stream: { name: "Stream", hint: "A brook in the woods" },
     fireplace: { name: "Fireplace", hint: "Embers and crackle" },
     cafe: { name: "Café", hint: "Cups and soft voices" },
     train: { name: "Train", hint: "A seat by the window" },
@@ -145,8 +146,9 @@ const it: Messages = {
   sounds: {
     rain: { name: "Pioggia", hint: "Sul vetro" },
     thunder: { name: "Tuoni", hint: "Ogni tanto, lontani" },
-    wind: { name: "Vento", hint: "Tra l’erba" },
+    wind: { name: "Vento", hint: "Tra i pini" },
     waves: { name: "Onde", hint: "Una riva tranquilla" },
+    stream: { name: "Ruscello", hint: "Acqua tra i sassi" },
     fireplace: { name: "Camino", hint: "Brace e scoppiettio" },
     cafe: { name: "Caffè", hint: "Tazzine e voci basse" },
     train: { name: "Treno", hint: "Un posto al finestrino" },

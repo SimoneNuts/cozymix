@@ -4,6 +4,10 @@ This file follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and 
 
 ## Unreleased
 
+### Added
+
+- **Stream.** A small brook trickling through a wood, recorded by FractalStudios (CC0, via Wikimedia Commons).
+
 ### Changed
 
 - **Real wind.** Wind is now a recording of a storm in a Swedish pine forest by W.carter (CC BY-SA 4.0, Wikimedia Commons) instead of synthesis. The *About* sheet links licenses that require it.

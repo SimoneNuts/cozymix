@@ -22,7 +22,14 @@ test("catalog ids are unique and every recording exists on disk", () => {
   for (const sound of sounds) {
     assert.ok(sound.defaultVolume > 0 && sound.defaultVolume <= 1, sound.id);
     assert.ok(sound.hue >= 0 && sound.hue < 360, sound.id);
-    if (sound.credit.license === "CC0 1.0") assert.match(sound.credit.url ?? "", /^https:\/\/freesound\.org\//);
+    if (sound.credit.license !== "MIT") {
+      // Licensed recordings link the page where the license was checked.
+      assert.match(sound.credit.url ?? "", /^https:\/\/(freesound\.org|commons\.wikimedia\.org)\//, sound.id);
+    }
+    if (sound.credit.license.startsWith("CC BY")) {
+      // Attribution licenses must also link the license text.
+      assert.match(sound.credit.licenseUrl ?? "", /^https:\/\/creativecommons\.org\/licenses\//, sound.id);
+    }
   }
 });
 
