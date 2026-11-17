@@ -63,7 +63,7 @@ export function removeDc(channel: Float32Array) {
 }
 
 export const LOOP_SECONDS: Record<Generator, number> = {
-  brown: 24,
+  brown: 36,
   pink: 24,
   waves: 36,
   wind: 40,
@@ -106,10 +106,33 @@ function makeVoice(
   const tau = Math.PI * 2;
   switch (kind) {
     case "brown": {
+      // Integrated white noise (6 dB per octave), shaped to sound deep and
+      // soft rather than hissy: a two-pole low-pass rolls off everything
+      // above a few hundred hertz, a high-pass trims the sub-bass that
+      // speakers cannot play, and the low-pass drifts slowly so the sound
+      // breathes instead of sitting still. Each ear drifts on its own phase.
       let level = 0;
-      return () => {
-        level = (level + 0.02 * random()) / 1.02;
-        return level;
+      let soft = 0;
+      let warm = 0;
+      let floor = 0;
+      let deep = 0;
+      const leak = 1 - (tau * 70) / sampleRate;
+      const kFloor = 1 - Math.exp((-tau * 40) / sampleRate);
+      const phase = channel * 1.7;
+      return (_, t) => {
+        level = leak * level + 0.05 * random();
+        const drift = 0.5 + 0.5 * Math.sin((tau * t * 3) / period + phase);
+        const cutoff = 380 + 420 * drift;
+        const k = 1 - Math.exp((-tau * cutoff) / sampleRate);
+        soft += k * (level - soft);
+        warm += k * (soft - warm);
+        // Two gentle high-pass stages, so the low end stays round but does not
+        // swallow the loudness on small speakers.
+        floor += kFloor * (warm - floor);
+        const trimmed = warm - floor;
+        deep += kFloor * (trimmed - deep);
+        const swell = 1 + 0.08 * Math.sin((tau * t * 4) / period + phase * 0.5);
+        return (trimmed - deep) * swell;
       };
     }
     case "pink": {
