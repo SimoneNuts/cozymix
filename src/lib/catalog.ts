@@ -17,11 +17,11 @@ export type SoundId =
   | "nebulizer"
   | "brown";
 
-export type Generator = "brown" | "waves";
+export type Generator = "brown";
 
 export type Credit = {
   author: string;
-  license: "CC0 1.0" | "CC BY-SA 4.0" | "MIT";
+  license: "CC0 1.0" | "CC BY 3.0" | "CC BY-SA 4.0" | "MIT";
   url?: string;
   /** Link to the license text, for licenses that require one. */
   licenseUrl?: string;
@@ -99,11 +99,17 @@ export const sounds: readonly Sound[] = [
   },
   {
     id: "waves",
-    kind: "generated",
-    generator: "waves",
+    kind: "loop",
+    file: "/audio/waves-shore.mp3",
+    crossfade: 4,
     hue: 194,
     defaultVolume: 0.5,
-    credit: original,
+    credit: {
+      author: "Luftrum",
+      license: "CC BY 3.0",
+      url: "https://commons.wikimedia.org/wiki/File:Oceanwavescrushing.ogg",
+      licenseUrl: "https://creativecommons.org/licenses/by/3.0/",
+    },
   },
   {
     id: "stream",

@@ -32,7 +32,7 @@ No account, no ads, no tracking. Everything stays on your device, and after the 
 
 ## The sounds
 
-Eight are real recordings, each CC0, CC BY-SA or original. Two are synthesized right in the browser: waves and brown noise. Sources and licenses are listed in [SOUND_SOURCES.md](SOUND_SOURCES.md).
+Nine are real recordings, each CC0, CC BY, CC BY-SA or original. Brown noise is synthesized right in the browser. Sources and licenses are listed in [SOUND_SOURCES.md](SOUND_SOURCES.md).
 
 ## Development
 

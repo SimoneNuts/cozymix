@@ -64,7 +64,6 @@ export function removeDc(channel: Float32Array) {
 
 export const LOOP_SECONDS: Record<Generator, number> = {
   brown: 36,
-  waves: 36,
 };
 const FADE_SECONDS = 2;
 
@@ -133,28 +132,6 @@ function makeVoice(
         return (trimmed - deep) * swell;
       };
     }
-    case "waves": {
-      // Each wave swells slowly, breaks, then washes back. Two sets of waves
-      // with periods that divide the loop, offset per ear.
-      let body = 0;
-      let wash = 0;
-      let rumble = 0;
-      const offset = channel * 0.07;
-      const shape = (phase: number) =>
-        phase < 0.55 ? (phase / 0.55) ** 2 : Math.exp(-(phase - 0.55) * 5.5);
-      return (_, t) => {
-        const big = shape((t / (period / 4) + offset) % 1);
-        const small = shape((t / (period / 5) + 0.4 + offset) % 1);
-        const swell = 0.75 * big + 0.4 * small;
-        const white = random();
-        // Brighter at the crest, darker as it pulls back.
-        const cutoff = 260 + 2200 * swell * swell;
-        const k = 1 - Math.exp((-tau * cutoff) / sampleRate);
-        body += k * (white - body);
-        wash += 0.08 * (white - wash);
-        rumble = (rumble + 0.02 * white) / 1.02;
-        return body * (0.15 + swell) + wash * 0.25 * swell + rumble * 1.2;
-      };
-    }
+
   }
 }

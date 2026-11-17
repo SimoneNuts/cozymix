@@ -4,7 +4,7 @@ What comes after 1.0, in priority order. The first step is to confirm that what 
 
 ## 1. Checks that automated tests cannot do
 
-- [ ] Listen to waves and brown noise on headphones. The tests check numbers, not character.
+- [ ] Listen to brown noise and the new recordings (wind, waves, stream) on headphones, for at least two loops each. The tests check numbers, not character.
 - [ ] Safari on iPhone and Mac: starting audio, the silent switch, and playback with the screen locked. Playwright's WebKit build for Windows has no Web Audio, so those tests are skipped locally.
 - [ ] Chrome on Android: installing as an app, offline use, and controls from the notification shade.
 - [ ] An hour of continuous playback on a phone: battery, heat, and no dropouts.
