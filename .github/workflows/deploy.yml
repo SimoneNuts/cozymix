@@ -34,6 +34,16 @@ jobs:
       - run: npm test
       - run: npm run build
       - run: npx playwright install --with-deps chromium firefox webkit
+      # CI machines have no sound card. Chromium falls back to a fake output,
+      # but Firefox and WebKit need a real audio server to start an
+      # AudioContext, so give them a silent virtual one.
+      - name: Virtual sound card
+        run: |
+          sudo apt-get install -y -q pulseaudio
+          pulseaudio --start --exit-idle-time=-1
+          pactl load-module module-null-sink sink_name=ci_silent
+          pactl set-default-sink ci_silent
+          pactl info | grep -i "default sink"
       - run: npx playwright test
       - uses: actions/upload-artifact@v4
         if: failure()

@@ -40,7 +40,13 @@ export function outputLevel(page: Page) {
 }
 
 export async function expectAudible(page: Page) {
-  await expect.poll(() => outputLevel(page), { timeout: 15_000 }).toBeGreaterThan(0.0005);
+  // Check the clock first, so a missing audio device reads as such in the report.
+  await expect
+    .poll(() => contextState(page), { message: "the AudioContext should be running" })
+    .toBe("running");
+  await expect
+    .poll(() => outputLevel(page), { message: "the engine should output sound", timeout: 15_000 })
+    .toBeGreaterThan(0.0005);
 }
 
 export async function expectSilent(page: Page) {
