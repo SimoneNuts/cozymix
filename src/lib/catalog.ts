@@ -14,10 +14,9 @@ export type SoundId =
   | "cafe"
   | "train"
   | "nebulizer"
-  | "brown"
-  | "pink";
+  | "brown";
 
-export type Generator = "brown" | "pink" | "waves";
+export type Generator = "brown" | "waves";
 
 export type Credit = {
   author: string;
@@ -149,14 +148,6 @@ export const sounds: readonly Sound[] = [
     defaultVolume: 0.35,
     credit: original,
   },
-  {
-    id: "pink",
-    kind: "generated",
-    generator: "pink",
-    hue: 335,
-    defaultVolume: 0.25,
-    credit: original,
-  },
 ];
 
 export const soundIds: readonly SoundId[] = sounds.map((sound) => sound.id);
@@ -199,6 +190,6 @@ export const scenes: readonly Scene[] = [
   { id: "cafe", levels: { cafe: 0.55, rain: 0.25 } },
   { id: "night-train", levels: { train: 0.6, rain: 0.3 } },
   { id: "seaside", levels: { waves: 0.65, wind: 0.2 } },
-  { id: "focus", levels: { brown: 0.5, pink: 0.12, rain: 0.2 } },
+  { id: "focus", levels: { brown: 0.5, rain: 0.2 } },
   { id: "nebulizer", levels: { nebulizer: 0.55, rain: 0.2 } },
 ];

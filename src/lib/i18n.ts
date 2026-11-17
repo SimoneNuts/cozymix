@@ -30,7 +30,6 @@ const en = {
     train: { name: "Train", hint: "A seat by the window" },
     nebulizer: { name: "Nebulizer", hint: "A steady little hum" },
     brown: { name: "Brown noise", hint: "Deep and soft" },
-    pink: { name: "Pink noise", hint: "Light and airy" },
   } satisfies Record<SoundId, SoundText>,
   scenes: {
     "rainy-window": "Rainy window",
@@ -153,7 +152,6 @@ const it: Messages = {
     train: { name: "Treno", hint: "Un posto al finestrino" },
     nebulizer: { name: "Nebulizzatore", hint: "Un ronzio costante" },
     brown: { name: "Rumore marrone", hint: "Profondo e morbido" },
-    pink: { name: "Rumore rosa", hint: "Leggero e arioso" },
   },
   scenes: {
     "rainy-window": "Pioggia alla finestra",

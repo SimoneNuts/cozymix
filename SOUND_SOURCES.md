@@ -13,7 +13,6 @@ Every sound in CozyMix is either a recording with verified provenance or origina
 | Wind (`wind`) | `public/audio/wind-pine-forest.mp3` | [Wind in Swedish pine forest at 25 mps](https://commons.wikimedia.org/wiki/File:Wind_in_Swedish_pine_forest_at_25_mps.ogg) | W.carter | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
 | Waves (`waves`) | `src/audio/dsp.ts` | Original synthesis in the browser | CozyMix contributors | MIT |
 | Brown noise (`brown`) | `src/audio/dsp.ts` | Original synthesis in the browser | CozyMix contributors | MIT |
-| Pink noise (`pink`) | `src/audio/dsp.ts` | Paul Kellet’s economy pink filter (a public technique), implemented for CozyMix | CozyMix contributors | MIT |
 
 CC0 needs no attribution. CozyMix credits every creator anyway, in the app’s *About* sheet. CC BY-SA 4.0 does require it: the *About* sheet names the creator, links the source page and links the license, and the changes are listed below.
 
@@ -43,7 +42,7 @@ nebulizer.wav    2f322b6c5d4b5ed7f6ca9c459fb8c64cb7aa344cccbfd9ce94c5d67d39a777f
 ## Original and synthesized sounds
 
 - **Nebulizer**: synthesized, not a recording of a real device. `scripts/generate-nebulizer.mjs` deterministically combines 50 Hz motor harmonics, a subtle 25 Hz vibration and filtered airflow with slow drift. The result is a 24 s mono WAV at 48 kHz/16-bit, with DC removed and peaks at 0.45 or below. It is looped with a 1 s crossfade.
-- **Waves, brown and pink noise**: rendered in the browser from seeded noise when first switched on (`src/audio/dsp.ts`). No samples, recordings or model output are involved. Their envelopes repeat exactly once per loop, so the loop has no seam.
+- **Waves and brown noise**: rendered in the browser from seeded noise when first switched on (`src/audio/dsp.ts`). No samples, recordings or model output are involved. Their envelopes repeat exactly once per loop, so the loop has no seam.
 
 ## Rules for new sounds
 

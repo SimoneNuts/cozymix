@@ -93,7 +93,7 @@ test("clearing turns everything off but keeps slider positions", () => {
 });
 
 test("a scene replaces the mix, keeps the master, and is recognised afterwards", () => {
-  const base = setMaster(toggle(emptyMix(), "pink"), 0.4);
+  const base = setMaster(toggle(emptyMix(), "brown"), 0.4);
   const storm = scenes.find((s) => s.id === "storm")!;
   const mix = sceneMix(storm, base);
   assert.equal(mix.master, 0.4);

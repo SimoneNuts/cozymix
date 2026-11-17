@@ -32,7 +32,7 @@ No account, no ads, no tracking. Everything stays on your device, and after the 
 
 ## The sounds
 
-Seven are real recordings, each CC0, CC BY-SA or original. Three are synthesized right in the browser: waves, and brown and pink noise. Sources and licenses are listed in [SOUND_SOURCES.md](SOUND_SOURCES.md).
+Seven are real recordings, each CC0, CC BY-SA or original. Two are synthesized right in the browser: waves and brown noise. Sources and licenses are listed in [SOUND_SOURCES.md](SOUND_SOURCES.md).
 
 ## Development
 

@@ -64,7 +64,6 @@ export function removeDc(channel: Float32Array) {
 
 export const LOOP_SECONDS: Record<Generator, number> = {
   brown: 36,
-  pink: 24,
   waves: 36,
 };
 const FADE_SECONDS = 2;
@@ -90,7 +89,7 @@ export function generate(kind: Generator, sampleRate: number, seed = 1): Float32
     removeDc(data);
     return seamless(data, fade);
   });
-  normalize(channels, kind === "pink" ? 0.12 : 0.16);
+  normalize(channels, 0.16);
   return channels;
 }
 
@@ -132,19 +131,6 @@ function makeVoice(
         deep += kFloor * (trimmed - deep);
         const swell = 1 + 0.08 * Math.sin((tau * t * 4) / period + phase * 0.5);
         return (trimmed - deep) * swell;
-      };
-    }
-    case "pink": {
-      // Paul Kellet's economy pink filter.
-      let b0 = 0;
-      let b1 = 0;
-      let b2 = 0;
-      return () => {
-        const white = random();
-        b0 = 0.99765 * b0 + white * 0.099046;
-        b1 = 0.963 * b1 + white * 0.2965164;
-        b2 = 0.57 * b2 + white * 1.0526913;
-        return b0 + b1 + b2 + white * 0.1848;
       };
     }
     case "waves": {

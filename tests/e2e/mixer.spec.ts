@@ -68,25 +68,25 @@ test("the mix is remembered across reloads, but never starts by itself", async (
 
 test("scenes replace the mix and can be undone; everything can be turned off", async ({ page }) => {
   await openApp(page);
-  await soundButton(page, "Pink noise").click();
+  await soundButton(page, "Brown noise").click();
   const storm = page.getByRole("button", { name: "Storm", exact: true });
   await storm.click();
   await expect(storm).toHaveAttribute("aria-pressed", "true");
   await expect(page.locator("#mix-title")).toHaveText("Storm");
   await expect(page.locator(".pad-toggle[aria-pressed=true]")).toHaveCount(3);
-  await expect(soundButton(page, "Pink noise")).toHaveAttribute("aria-pressed", "false");
+  await expect(soundButton(page, "Brown noise")).toHaveAttribute("aria-pressed", "false");
   await expectAudible(page);
 
   await page.getByRole("button", { name: "Undo" }).click();
   await expect(page.locator(".pad-toggle[aria-pressed=true]")).toHaveCount(1);
-  await expect(soundButton(page, "Pink noise")).toHaveAttribute("aria-pressed", "true");
+  await expect(soundButton(page, "Brown noise")).toHaveAttribute("aria-pressed", "true");
 
   await page.getByRole("button", { name: "Turn everything off" }).click();
   await expect(page.locator(".pad-toggle[aria-pressed=true]")).toHaveCount(0);
   await expect(playButton(page)).toBeDisabled();
   await expectSilent(page);
   await page.getByRole("button", { name: "Undo" }).click();
-  await expect(soundButton(page, "Pink noise")).toHaveAttribute("aria-pressed", "true");
+  await expect(soundButton(page, "Brown noise")).toHaveAttribute("aria-pressed", "true");
 });
 
 test("saving, loading and deleting your own mixes", async ({ page }) => {

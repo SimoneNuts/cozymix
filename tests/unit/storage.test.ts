@@ -76,6 +76,11 @@ test("share links skip unknown or malformed entries and clamp levels", () => {
     skipped: 3,
   });
   assert.equal(decodeShare("#mix=ghost.20"), undefined);
+  // Pink noise was removed: old links still open, without it.
+  assert.deepEqual(decodeShare("#mix=brown.50,pink.12,rain.20"), {
+    levels: { brown: 0.5, rain: 0.2 },
+    skipped: 1,
+  });
   assert.equal(decodeShare("#other"), undefined);
   assert.equal(decodeShare(""), undefined);
 });
