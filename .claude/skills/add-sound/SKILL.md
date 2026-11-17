@@ -33,7 +33,7 @@ Then wire the sound in. TypeScript reports each place you miss.
 1. `src/lib/catalog.ts`: add the id to `SoundId`, and an entry to `sounds` with `hue`, `defaultVolume` and `credit`. Pick a hue that differs from its neighbours.
 2. `src/lib/i18n.ts`: add `sounds.<id>` with a `name` and a short `hint`, in English and Italian. Keep the hint under about 25 characters so it fits a 320 px pad.
 3. `src/ui/icons.tsx`: add a 24 px line icon under the same id, stroke only, in the style of the others.
-4. `public/sw.js`: add the file to `AUDIO`. A unit test fails if this list and the catalog differ.
+4. `src/lib/catalog.ts`: update `AUDIO_MEGABYTES` if the total size of `public/audio` changes. A unit test fails if it is off. Nothing goes in `public/sw.js`: recordings are kept offline when played or downloaded.
 5. Optionally, add it to a scene in `scenes`.
 
 ## 4. Verify

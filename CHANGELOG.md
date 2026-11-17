@@ -2,15 +2,23 @@
 
 This file follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
-## Unreleased
+## 1.1.0 — 2026-11-17
+
+Real recordings instead of synthesis, new sounds, and a much lighter first visit.
 
 ### Added
 
+- **Download all sounds.** The About sheet shows how many sounds are saved for offline use, with a button that saves the rest and shows its progress. An installed app saves every sound by itself.
+- **Fan night**, a new scene: the mine fan with a little brown noise.
 - **Three fans** for steady, sleep-friendly noise, all from the Work With Sounds archive (CC BY 4.0, via Wikimedia Commons): a ventilation fan in a Slovenian coal mine, a vacuum fan in a Swedish paper mill, and the cooker hood of a Brussels chip shop. Each is trimmed to its steady part and levelled with the other sounds.
 - **Stream.** A small brook trickling through a wood, recorded by FractalStudios (CC0, via Wikimedia Commons).
 
 ### Changed
 
+- **A much lighter first visit.** The app no longer downloads every recording (about 17 MB) on the first visit. The app itself still opens offline, and each sound is saved for offline use the first time it plays.
+- **Cabin** now has the stream in it.
+- **Credits** mark edited recordings as *modified* and link the full list of sources, licenses and changes.
+- **Smaller nebulizer file**: the same sound as an MP3 (0.27 MB instead of a 2.3 MB WAV).
 - **Real waves.** Waves are now a recording of a fjord shore in Denmark by Luftrum (CC BY 3.0, via Wikimedia Commons) instead of synthesis. Brown noise is the only sound still made in the browser.
 - **Real wind.** Wind is now a recording of a storm in a Swedish pine forest by W.carter (CC BY-SA 4.0, Wikimedia Commons) instead of synthesis. The *About* sheet links licenses that require it.
 - **Softer brown noise.** It is now deeper and calmer: a two-pole low-pass removes the hiss above a few hundred hertz, a gentle high-pass trims sub-bass that small speakers cannot play, and the tone drifts slowly so it breathes. The loop is 36 s instead of 24 s.

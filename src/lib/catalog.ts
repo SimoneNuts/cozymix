@@ -28,6 +28,8 @@ export type Credit = {
   url?: string;
   /** Link to the license text, for licenses that require one. */
   licenseUrl?: string;
+  /** The recording was edited beyond a format change (trimmed, levelled…). */
+  modified?: boolean;
 };
 
 type Common = {
@@ -71,6 +73,8 @@ const workWithSounds = (author: string, file: string): Credit => ({
   license: "CC BY 4.0",
   url: `https://commons.wikimedia.org/wiki/File:${file}`,
   licenseUrl: "https://creativecommons.org/licenses/by/4.0/",
+  // Trimmed to the steady part and lowered; see SOUND_SOURCES.md.
+  modified: true,
 });
 
 export const sounds: readonly Sound[] = [
@@ -163,7 +167,7 @@ export const sounds: readonly Sound[] = [
   {
     id: "nebulizer",
     kind: "loop",
-    file: "/audio/nebulizer.wav",
+    file: "/audio/nebulizer.mp3",
     crossfade: 1,
     hue: 150,
     defaultVolume: 0.4,
@@ -218,6 +222,12 @@ export function isSoundId(id: string): id is SoundId {
   return byId.has(id);
 }
 
+/**
+ * Size of every recording together, in megabytes (10^6 bytes), as shown on
+ * the "Download all sounds" button. A unit test checks it against the files.
+ */
+export const AUDIO_MEGABYTES = 17;
+
 /** Files to keep for offline use. Generated sounds need none. */
 export const audioFiles: readonly string[] = sounds.flatMap((sound) =>
   sound.kind === "generated" ? [] : [sound.file],
@@ -231,7 +241,8 @@ export type SceneId =
   | "night-train"
   | "seaside"
   | "focus"
-  | "nebulizer";
+  | "nebulizer"
+  | "fan-night";
 
 export type Scene = {
   id: SceneId;
@@ -242,10 +253,11 @@ export type Scene = {
 export const scenes: readonly Scene[] = [
   { id: "rainy-window", levels: { rain: 0.65, wind: 0.15 } },
   { id: "storm", levels: { rain: 0.7, thunder: 0.45, wind: 0.3 } },
-  { id: "cabin", levels: { fireplace: 0.6, rain: 0.3, wind: 0.15 } },
+  { id: "cabin", levels: { fireplace: 0.6, rain: 0.3, wind: 0.15, stream: 0.25 } },
   { id: "cafe", levels: { cafe: 0.55, rain: 0.25 } },
   { id: "night-train", levels: { train: 0.6, rain: 0.3 } },
   { id: "seaside", levels: { waves: 0.65, wind: 0.2 } },
   { id: "focus", levels: { brown: 0.5, rain: 0.2 } },
   { id: "nebulizer", levels: { nebulizer: 0.55, rain: 0.2 } },
+  { id: "fan-night", levels: { fan: 0.5, brown: 0.2 } },
 ];

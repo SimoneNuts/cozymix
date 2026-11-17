@@ -1,12 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { asset } from "@/lib/base";
+import { useEffect, useState, useSyncExternalStore } from "react";
+import { OFFLINE_CACHE, asset } from "@/lib/base";
 import { audioFiles } from "@/lib/catalog";
 import { useLatest, useStore } from "./store";
 
 const production = process.env.NODE_ENV === "production";
-const OFFLINE_CHECK = ["/", ...audioFiles].map(asset);
+const APP_PAGE = asset("/");
+const RECORDINGS = audioFiles.map(asset);
+
+/** True when CozyMix runs as an installed app rather than in a browser tab. */
+function installed(): boolean {
+  return (
+    window.matchMedia?.("(display-mode: standalone)").matches ||
+    (navigator as Navigator & { standalone?: boolean }).standalone === true
+  );
+}
 
 /**
  * Registers the offline worker in production. In development it removes any
@@ -39,41 +48,124 @@ export function useServiceWorker() {
           .map((entry) => entry.name)
           .filter((url) => url.startsWith(location.origin + asset("/_next/static/")));
         registration.active?.postMessage({ type: "cache", urls });
+        // Someone who installed the app chose to keep it: keep every sound too.
+        if (installed()) void downloadAllSounds();
       })
       .catch(() => {});
+    const onInstalled = () => void downloadAllSounds();
+    window.addEventListener("appinstalled", onInstalled);
+    return () => window.removeEventListener("appinstalled", onInstalled);
   }, []);
 }
 
 export type OfflineState = "unavailable" | "preparing" | "ready";
 
-/** Whether the page and every recording are in the offline cache. Checked while `watch` is true. */
-export function useOffline(watch: boolean): OfflineState {
-  const [state, setState] = useState<OfflineState>(() =>
-    production && "serviceWorker" in navigator && "caches" in window ? "preparing" : "unavailable",
-  );
+export type Offline = {
+  /** Whether the app itself opens without a connection. */
+  state: OfflineState;
+  /** Recordings already kept for offline use, out of `total`. */
+  saved: number;
+  total: number;
+};
+
+/**
+ * Whether the app opens offline, and how many recordings are kept. Recordings
+ * are kept the first time they play, or all at once by `downloadAllSounds`.
+ * Checked while `watch` is true.
+ */
+export function useOffline(watch: boolean): Offline {
+  const supported = production && "serviceWorker" in navigator && "caches" in window;
+  const [offline, setOffline] = useState<Offline>(() => ({
+    state: supported ? "preparing" : "unavailable",
+    saved: 0,
+    total: RECORDINGS.length,
+  }));
+  const download = useDownload();
   useEffect(() => {
-    if (!watch || state !== "preparing") return;
+    if (!watch || !supported) return;
     let stopped = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
     const check = async () => {
       try {
-        const found = await Promise.all(OFFLINE_CHECK.map((url) => caches.match(url)));
-        if (!stopped && found.every(Boolean) && navigator.serviceWorker.controller) {
-          setState("ready");
-          return;
-        }
+        const page = await caches.match(APP_PAGE);
+        const kept = await Promise.all(RECORDINGS.map((url) => caches.match(url)));
+        if (stopped) return;
+        setOffline({
+          state: page && navigator.serviceWorker.controller ? "ready" : "preparing",
+          saved: kept.filter(Boolean).length,
+          total: RECORDINGS.length,
+        });
       } catch {
-        if (!stopped) setState("unavailable");
+        if (!stopped) setOffline((current) => ({ ...current, state: "unavailable" }));
         return;
       }
       if (!stopped) timer = setTimeout(check, 1500);
     };
-    let timer = setTimeout(check, 0);
+    timer = setTimeout(check, 0);
     return () => {
       stopped = true;
       clearTimeout(timer);
     };
-  }, [watch, state]);
-  return state;
+    // A finished download changes the count: check again straight away.
+  }, [watch, supported, download.running]);
+  return offline;
+}
+
+export type Download = {
+  running: boolean;
+  done: number;
+  total: number;
+  /** The last download could not fetch every recording. */
+  failed: boolean;
+};
+
+let download: Download = { running: false, done: 0, total: 0, failed: false };
+const downloadListeners = new Set<() => void>();
+
+function setDownload(next: Download) {
+  download = next;
+  for (const listener of downloadListeners) listener();
+}
+
+/** Progress of `downloadAllSounds`, shared by every component that shows it. */
+export function useDownload(): Download {
+  return useSyncExternalStore(
+    (listener) => {
+      downloadListeners.add(listener);
+      return () => downloadListeners.delete(listener);
+    },
+    () => download,
+    () => download,
+  );
+}
+
+/**
+ * Keeps every recording for offline use. Only fetches the ones not kept yet,
+ * one at a time, and never plays anything. Safe to call more than once.
+ */
+export async function downloadAllSounds(): Promise<void> {
+  if (download.running || !("caches" in window)) return;
+  setDownload({ running: true, done: 0, total: 0, failed: false });
+  let failed = false;
+  try {
+    const cache = await caches.open(OFFLINE_CACHE);
+    const missing: string[] = [];
+    for (const url of RECORDINGS) if (!(await caches.match(url))) missing.push(url);
+    setDownload({ running: true, done: 0, total: missing.length, failed: false });
+    for (const [index, url] of missing.entries()) {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        await cache.put(url, response);
+      } catch {
+        failed = true;
+      }
+      setDownload({ running: true, done: index + 1, total: missing.length, failed });
+    }
+  } catch {
+    failed = true;
+  }
+  setDownload({ ...download, running: false, failed });
 }
 
 type InstallEvent = Event & { prompt: () => Promise<void> };

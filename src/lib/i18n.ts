@@ -44,6 +44,7 @@ const en = {
     seaside: "Seaside",
     focus: "Deep focus",
     nebulizer: "Nebulizer night",
+    "fan-night": "Fan night",
   } satisfies Record<SceneId, string>,
   sections: {
     scenes: "Start with a scene",
@@ -122,12 +123,20 @@ const en = {
   info: {
     title: "About CozyMix",
     about:
-      "Layer rain, fire, a café, a train and gentle noise. Everything stays on this device: no account, no ads, no tracking.",
+      "Layer rain, waves, a stream, a fire, a café, a train and steady fans. Everything stays on this device: no account, no ads, no tracking.",
     shortcuts: "Space plays and pauses.",
     offline: "Offline",
-    offlineReady: "Ready to work without a connection.",
+    offlineReady: "The app opens without a connection.",
     offlinePreparing: "Getting ready for offline use…",
     offlineUnavailable: "Offline use isn’t available in this browser or mode.",
+    soundsAll: (n: number) => `All ${n} sounds are saved for offline use.`,
+    soundsSome: (saved: number, total: number) =>
+      `${saved} of ${total} sounds are saved for offline use. Each one is saved the first time it plays.`,
+    downloadAll: (megabytes: number) => `Download all sounds (${megabytes} MB)`,
+    downloading: (done: number, total: number) => `Downloading ${done} of ${total}…`,
+    downloadFailed: "Some sounds couldn’t be downloaded. Check the connection and try again.",
+    modified: "modified",
+    sources: "Sources, licenses and changes",
     install: "Install the app",
     credits: "Sounds",
     synthesized: "Made in your browser",
@@ -170,6 +179,7 @@ const it: Messages = {
     seaside: "In riva al mare",
     focus: "Concentrazione",
     nebulizer: "Notte col nebulizzatore",
+    "fan-night": "Notte con la ventola",
   },
   sections: {
     scenes: "Parti da una scena",
@@ -249,12 +259,20 @@ const it: Messages = {
   info: {
     title: "Su CozyMix",
     about:
-      "Sovrapponi pioggia, fuoco, un caffè, un treno e rumori morbidi. Tutto resta su questo dispositivo: niente account, pubblicità o tracciamento.",
+      "Sovrapponi pioggia, onde, un ruscello, il fuoco, un caffè, un treno e il ronzio delle ventole. Tutto resta su questo dispositivo: niente account, pubblicità o tracciamento.",
     shortcuts: "La barra spaziatrice avvia e mette in pausa.",
     offline: "Offline",
-    offlineReady: "Pronto a funzionare senza connessione.",
+    offlineReady: "L’app si apre anche senza connessione.",
     offlinePreparing: "Preparazione per l’uso offline…",
     offlineUnavailable: "L’uso offline non è disponibile in questo browser o modalità.",
+    soundsAll: (n) => `Tutti i ${n} suoni sono salvati per l’uso offline.`,
+    soundsSome: (saved, total) =>
+      `${saved} suoni su ${total} sono salvati per l’uso offline. Ognuno si salva la prima volta che lo ascolti.`,
+    downloadAll: (megabytes) => `Scarica tutti i suoni (${megabytes} MB)`,
+    downloading: (done, total) => `Download ${done} di ${total}…`,
+    downloadFailed: "Alcuni suoni non sono stati scaricati. Controlla la connessione e riprova.",
+    modified: "modificato",
+    sources: "Fonti, licenze e modifiche",
     install: "Installa l’app",
     credits: "Suoni",
     synthesized: "Creato nel tuo browser",

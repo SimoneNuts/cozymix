@@ -81,7 +81,8 @@ The parsers never throw. Unknown sounds are dropped, levels are clamped, and inv
 
 `public/sw.js` is registered only in production.
 
-- **Install:** the worker precaches the page, the manifest, the icons, every recording, and the `/_next/static` files listed in the HTML. The page then posts any other scripts it loaded.
+- **Install:** the worker precaches the page, the manifest, the icons and the `/_next/static` files listed in the HTML, so the app always opens offline. The page then posts any other scripts it loaded. Recordings are **not** precached: all of them together are about 17 MB, too much to fetch silently on a phone’s first visit.
+- **Recordings:** each one is kept the first time it plays (the worker caches it as it passes). *Download all sounds* in the About sheet keeps the rest, one file at a time with progress (`downloadAllSounds()` in `ui/system.ts`), and it runs on its own when CozyMix runs as an installed app (`display-mode: standalone`, or the `appinstalled` event). The page writes to the same cache as the worker (`OFFLINE_CACHE` in `lib/base.ts`; a unit test checks the name). `AUDIO_MEGABYTES` in the catalog is the size on the button, also checked by a unit test.
 - **Fetch:** recordings come from the cache first. Everything else is network-first with a cache fallback, so an online visit always sees the newest version.
 - **Activate:** the worker deletes older `cozymix-*` caches only, never other sites’ caches on a shared origin such as `github.io`. If it deleted any, it reloads the pages they controlled.
 - **Base path:** the worker reads it from its own scope, so the same file works at a domain root and under `/cozymix/`.
@@ -114,5 +115,5 @@ Playwright’s WebKit build for Windows has no Web Audio, so tests that need sou
 1. Verify the license and add it to `SOUND_SOURCES.md`, then put the file in `public/audio/`. For a synthesized sound, add a generator to `dsp.ts` instead.
 2. Add an entry to `sounds` in `lib/catalog.ts`, and its id to `SoundId`.
 3. Add the name and hint to both languages in `lib/i18n.ts`, and an icon under the same id in `ui/icons.tsx`. TypeScript fails until both exist.
-4. Add the file to `AUDIO` in `public/sw.js` so it works offline (a unit test checks that the two lists match).
+4. Update `AUDIO_MEGABYTES` in `lib/catalog.ts` if the total size changes (a unit test says so). Nothing to add to `public/sw.js`: recordings are kept for offline use when played or downloaded.
 5. Run the checks. The unit tests confirm the file exists on disk.

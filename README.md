@@ -11,7 +11,7 @@
 
 **Sounds to feel at home.** An ambient sound mixer for focus, rest or sleep. It has rain on the window, a fireplace, a café, a night train, waves, a stream, wind, steady machine fans and soft noise. Turn on the sounds you like, set each one's volume, and let everything else fade away.
 
-No account, no ads, no tracking. Everything stays on your device, and after the first visit it works offline too.
+No account, no ads, no tracking. Everything stays on your device. After the first visit the app opens offline too: each sound is saved the first time it plays, *Download all sounds* saves the rest, and an installed app saves everything by itself.
 
 <p align="center">
   <img src="docs/desktop.png" alt="CozyMix on desktop, with scenes at the top, a grid of sounds and the player at the bottom" width="820">

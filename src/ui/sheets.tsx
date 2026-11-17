@@ -1,14 +1,16 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import { sounds } from "@/lib/catalog";
+import { AUDIO_MEGABYTES, sounds } from "@/lib/catalog";
 import { locales } from "@/lib/i18n";
 import { MAX_NAME } from "@/lib/storage";
 import { TIMER_MINUTES, FADE_SECONDS, formatRemaining } from "@/lib/timer";
 import { Icon } from "./icons";
 import { useLocale } from "./locale";
-import { useInstall, useOffline } from "./system";
+import { downloadAllSounds, useDownload, useInstall, useOffline } from "./system";
 import { useStore } from "./store";
+
+const SOURCES_URL = "https://github.com/SimoneNuts/cozymix/blob/main/SOUND_SOURCES.md";
 
 type SheetProps = {
   open: boolean;
@@ -165,7 +167,9 @@ function SaveForm({ onDone }: { onDone: () => void }) {
 export function InfoSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { t, locale, setLocale } = useLocale();
   const offline = useOffline(open);
+  const download = useDownload();
   const install = useInstall();
+  const allSaved = offline.saved === offline.total;
   return (
     <Sheet open={open} onClose={onClose} title={t.info.title}>
       <p className="sheet-intro">{t.info.about}</p>
@@ -187,14 +191,42 @@ export function InfoSheet({ open, onClose }: { open: boolean; onClose: () => voi
       </fieldset>
 
       <h3>{t.info.offline}</h3>
-      <p className="offline-status" data-state={offline}>
-        {offline === "ready" && <Icon name="check" />}
-        {offline === "ready"
+      <p className="offline-status" data-state={offline.state}>
+        {offline.state === "ready" && <Icon name="check" />}
+        {offline.state === "ready"
           ? t.info.offlineReady
-          : offline === "preparing"
+          : offline.state === "preparing"
             ? t.info.offlinePreparing
             : t.info.offlineUnavailable}
       </p>
+      {offline.state === "ready" && (
+        <>
+          <p className="offline-sounds" data-state={allSaved ? "all" : "some"} aria-live="polite">
+            {allSaved && <Icon name="check" />}
+            {download.running
+              ? t.info.downloading(download.done, download.total)
+              : allSaved
+                ? t.info.soundsAll(offline.total)
+                : t.info.soundsSome(offline.saved, offline.total)}
+          </p>
+          {download.failed && !download.running && (
+            <p className="field-error" role="alert">
+              {t.info.downloadFailed}
+            </p>
+          )}
+          {!allSaved && (
+            <button
+              type="button"
+              className="button"
+              disabled={download.running}
+              onClick={() => void downloadAllSounds()}
+            >
+              <Icon name="download" />
+              {t.info.downloadAll(AUDIO_MEGABYTES)}
+            </button>
+          )}
+        </>
+      )}
       {install && (
         <button type="button" className="button" onClick={install}>
           <Icon name="download" />
@@ -218,17 +250,28 @@ export function InfoSheet({ open, onClose }: { open: boolean; onClose: () => voi
                 t.info.original
               )}{" "}
               ·{" "}
+              {sound.credit.modified && <>{t.info.modified} · </>}
               {sound.credit.licenseUrl ? (
-                <a href={sound.credit.licenseUrl} target="_blank" rel="noreferrer">
+                <a
+                  className="credit-license"
+                  href={sound.credit.licenseUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   {sound.credit.license}
                 </a>
               ) : (
-                sound.credit.license
+                <span className="credit-license">{sound.credit.license}</span>
               )}
             </span>
           </li>
         ))}
       </ul>
+      <p className="fine-print">
+        <a href={SOURCES_URL} target="_blank" rel="noreferrer">
+          {t.info.sources}
+        </a>
+      </p>
       <p className="fine-print">{t.info.shortcuts}</p>
     </Sheet>
   );

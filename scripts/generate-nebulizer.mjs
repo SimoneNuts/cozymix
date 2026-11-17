@@ -1,4 +1,8 @@
-import { writeFile } from "node:fs/promises";
+import { spawnSync } from "node:child_process";
+import { mkdtemp, rm, stat, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 // Original sound design, not a recording of a medical device. A small motor's
 // harmonics and vibration sit under filtered airflow, with slow variations.
@@ -42,7 +46,7 @@ const mean = sum / samples.length;
 let peak = 0;
 for (const sample of samples) peak = Math.max(peak, Math.abs(sample - mean));
 
-// Mono PCM WAV, reproducible and universally decodable by Web Audio.
+// Mono PCM WAV, reproducible. It is then converted to MP3 (see below).
 const wav = Buffer.alloc(44 + samples.length * 2);
 wav.write("RIFF", 0);
 wav.writeUInt32LE(wav.length - 8, 4);
@@ -59,5 +63,19 @@ wav.writeUInt32LE(samples.length * 2, 40);
 for (let i = 0; i < samples.length; i++) {
   wav.writeInt16LE(Math.round(((samples[i] - mean) / peak) * 0.45 * 32767), 44 + i * 2);
 }
-await writeFile(new URL("../public/audio/nebulizer.wav", import.meta.url), wav);
-console.log(`Original nebulizer sound: ${seconds}s, ${wav.length} bytes.`);
+// The WAV is 2.3 MB; as an MP3 it is about 0.3 MB with no audible difference,
+// which matters for the offline download. Needs FFmpeg with libmp3lame.
+const scratch = await mkdtemp(join(tmpdir(), "cozymix-"));
+const source = join(scratch, "nebulizer.wav");
+const target = fileURLToPath(new URL("../public/audio/nebulizer.mp3", import.meta.url));
+await writeFile(source, wav);
+const ffmpeg = spawnSync(
+  "ffmpeg",
+  ["-hide_banner", "-loglevel", "error", "-y", "-i", source, "-map_metadata", "-1", "-c:a", "libmp3lame", "-q:a", "2", target],
+  { stdio: "inherit" },
+);
+await rm(scratch, { recursive: true, force: true });
+if (ffmpeg.status !== 0) {
+  throw new Error("FFmpeg with libmp3lame is needed to write public/audio/nebulizer.mp3.");
+}
+console.log(`Original nebulizer sound: ${seconds}s, ${(await stat(target)).size} bytes as MP3.`);

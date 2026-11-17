@@ -1,6 +1,10 @@
 /*
  * CozyMix offline worker.
  *
+ * - The app itself (page, scripts, styles, icons) is kept on the first visit,
+ *   so CozyMix always opens offline. Recordings are not: each one is kept the
+ *   first time it plays, and the page can ask for all of them at once (the
+ *   "Download all sounds" button, or automatically once the app is installed).
  * - Recordings (audio/) never change: served from the cache first.
  * - Everything else goes to the network first and falls back to the cache, so
  *   an online visit always gets the latest version and nothing goes stale.
@@ -12,20 +16,6 @@
 const PREFIX = "cozymix";
 const CACHE = `${PREFIX}-v2`;
 const BASE = new URL(self.registration.scope).pathname.replace(/\/$/, "");
-const AUDIO = [
-  "/audio/rain-window.mp3",
-  "/audio/wind-pine-forest.mp3",
-  "/audio/stream.mp3",
-  "/audio/waves-shore.mp3",
-  "/audio/thunder.mp3",
-  "/audio/fireplace.mp3",
-  "/audio/coffee-shop.mp3",
-  "/audio/train.mp3",
-  "/audio/nebulizer.wav",
-  "/audio/fan-mine.mp3",
-  "/audio/fan-paper-mill.mp3",
-  "/audio/cooker-hood.mp3",
-];
 const SHELL = ["/", "/manifest.webmanifest", "/icons/icon-192.png", "/icons/icon-512.png"];
 const at = (path) => BASE + path;
 
@@ -33,7 +23,7 @@ self.addEventListener("install", (event) => {
   event.waitUntil(
     (async () => {
       const cache = await caches.open(CACHE);
-      await cache.addAll([...SHELL, ...AUDIO].map(at));
+      await cache.addAll(SHELL.map(at));
       // Keep the scripts and styles the page needs, as listed in its HTML.
       const html = await (await cache.match(at("/"))).text();
       const assets = [...html.matchAll(/(?:src|href)="([^"]*\/_next\/static\/[^"]+)"/g)].map(

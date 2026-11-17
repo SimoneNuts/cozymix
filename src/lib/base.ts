@@ -11,3 +11,6 @@ export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 export function asset(path: string): string {
   return BASE_PATH + path;
 }
+
+/** The offline cache. Must match `CACHE` in public/sw.js (a unit test checks). */
+export const OFFLINE_CACHE = "cozymix-v2";

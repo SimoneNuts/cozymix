@@ -913,14 +913,20 @@
   outline-offset: 3px;
 }
 
-.offline-status {
+.offline-status,
+.offline-sounds {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.offline-status[data-state="ready"] .icon {
+.offline-status[data-state="ready"] .icon,
+.offline-sounds[data-state="all"] .icon {
   color: var(--accent-strong);
+}
+
+.credit-license {
+  white-space: nowrap;
 }
 
 .credits {

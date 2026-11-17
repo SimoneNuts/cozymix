@@ -1,7 +1,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { existsSync, readFileSync } from "node:fs";
-import { audioFiles, scenes, sounds, isSoundId } from "../../src/lib/catalog.ts";
+import { existsSync, readFileSync, statSync } from "node:fs";
+import { AUDIO_MEGABYTES, audioFiles, scenes, sounds, isSoundId } from "../../src/lib/catalog.ts";
+import { OFFLINE_CACHE } from "../../src/lib/base.ts";
 import {
   activeIds,
   clampLevel,
@@ -33,11 +34,18 @@ test("catalog ids are unique and every recording exists on disk", () => {
   }
 });
 
-test("the offline worker caches exactly the catalog's recordings", () => {
+test("the offline worker shares the page's cache and does not pre-download recordings", () => {
   const worker = readFileSync("public/sw.js", "utf8");
-  const list = /const AUDIO = \[([^\]]*)\]/.exec(worker)?.[1] ?? "";
-  const cached = [...list.matchAll(/"([^"]+)"/g)].map((m) => m[1]);
-  assert.deepEqual([...cached].sort(), [...audioFiles].sort());
+  const prefix = /const PREFIX = "([^"]+)"/.exec(worker)?.[1];
+  const version = /const CACHE = `\$\{PREFIX\}-(v\d+)`/.exec(worker)?.[1];
+  assert.equal(`${prefix}-${version}`, OFFLINE_CACHE);
+  // Recordings are kept when played, or on request: never on the first visit.
+  assert.doesNotMatch(worker, /\/audio\/[^"]+\.(mp3|wav|ogg)/);
+});
+
+test("the download size shown to people matches the recordings", () => {
+  const bytes = audioFiles.reduce((sum, file) => sum + statSync(`public${file}`).size, 0);
+  assert.equal(Math.round(bytes / 1e6), AUDIO_MEGABYTES);
 });
 
 test("scenes only use known sounds, at audible levels", () => {

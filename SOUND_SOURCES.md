@@ -10,7 +10,7 @@ Every sound in CozyMix is either a recording with verified provenance or origina
 | Fireplace (`fireplace`) | `public/audio/fireplace.mp3` | [fire_crackling.wav](https://freesound.org/people/ceich93/sounds/263864/) | ceich93 | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
 | Café (`cafe`) | `public/audio/coffee-shop.mp3` | [Coffee Shop.wav](https://freesound.org/people/Trainscough5407/sounds/404478/) | Trainscough5407 | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
 | Train (`train`) | `public/audio/train.mp3` | [Train interior](https://freesound.org/people/Throndronis/sounds/799526/) | Throndronis | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) |
-| Nebulizer (`nebulizer`) | `public/audio/nebulizer.wav` | Original sound design, `scripts/generate-nebulizer.mjs` | CozyMix contributors | MIT |
+| Nebulizer (`nebulizer`) | `public/audio/nebulizer.mp3` | Original sound design, `scripts/generate-nebulizer.mjs` | CozyMix contributors | MIT |
 | Fan (`fan`) | `public/audio/fan-mine.mp3` | [WWS Ventilationfan.ogg](https://commons.wikimedia.org/wiki/File:WWS_Ventilationfan.ogg) | Work With Sounds / Technical Museum of Slovenia | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) |
 | Paper mill (`mill`) | `public/audio/fan-paper-mill.mp3` | [WWS Vacuumfan.ogg](https://commons.wikimedia.org/wiki/File:WWS_Vacuumfan.ogg) | Work With Sounds / Torsten Nilsson | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) |
 | Cooker hood (`hood`) | `public/audio/cooker-hood.mp3` | [WWS Cookerhood.ogg](https://commons.wikimedia.org/wiki/File:WWS_Cookerhood.ogg) | Work With Sounds / La Fonderie | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) |
@@ -18,7 +18,7 @@ Every sound in CozyMix is either a recording with verified provenance or origina
 | Waves (`waves`) | `public/audio/waves-shore.mp3` | [Oceanwavescrushing.ogg](https://commons.wikimedia.org/wiki/File:Oceanwavescrushing.ogg), originally [Freesound #48412](https://freesound.org/people/Luftrum/sounds/48412/) | Luftrum | [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/) |
 | Brown noise (`brown`) | `src/audio/dsp.ts` | Original synthesis in the browser | CozyMix contributors | MIT |
 
-CC0 needs no attribution. CozyMix credits every creator anyway, in the app’s *About* sheet. CC BY 3.0, CC BY 4.0 and CC BY-SA 4.0 do require it: the *About* sheet names the creator, links the source page and links the license, and the changes are listed below.
+CC0 needs no attribution. CozyMix credits every creator anyway, in the app’s *About* sheet. CC BY 3.0, CC BY 4.0 and CC BY-SA 4.0 do require it: the *About* sheet names the creator, links the source page and links the license, marks edited recordings as *modified*, and links this file, where the changes are listed below.
 
 ## Provenance of the recordings
 
@@ -51,12 +51,12 @@ fan-mine.mp3     f9f06ab465b2df075678433f307a370ef9d28274d87a02e9cafacca966e8ee9
 fan-paper-mill.mp3  1c0bb1b7146b97205fa6e0534fed25fb553f15fd225184c83c11ca6df926ca52
 cooker-hood.mp3  c5f3ed5243e2592b2a81c33994c9942f7e510eaaff68f48c09ed93028dfaaf4a
 waves-shore.mp3  130e820f40b64e2b5fd688252d6fa7e7783585b32299ede3288bfbf4790001d2
-nebulizer.wav    2f322b6c5d4b5ed7f6ca9c459fb8c64cb7aa344cccbfd9ce94c5d67d39a777fd
+nebulizer.mp3    20f861fc2e67b6cf0d12b8de7d91fbbf6dc6036592b51339ea5db57b8a280b39
 ```
 
 ## Original and synthesized sounds
 
-- **Nebulizer**: synthesized, not a recording of a real device. `scripts/generate-nebulizer.mjs` deterministically combines 50 Hz motor harmonics, a subtle 25 Hz vibration and filtered airflow with slow drift. The result is a 24 s mono WAV at 48 kHz/16-bit, with DC removed and peaks at 0.45 or below. It is looped with a 1 s crossfade.
+- **Nebulizer**: synthesized, not a recording of a real device. `scripts/generate-nebulizer.mjs` deterministically combines 50 Hz motor harmonics, a subtle 25 Hz vibration and filtered airflow with slow drift. It renders 24 s of mono at 48 kHz/16-bit, with DC removed and peaks at 0.45 or below, and converts it to MP3 with FFmpeg (libmp3lame `-q:a 2`): 0.27 MB instead of a 2.3 MB WAV. The script reproduces the file byte for byte. It is looped with a 1 s crossfade.
 - **Brown noise**: rendered in the browser from seeded noise when first switched on (`src/audio/dsp.ts`). No samples, recordings or model output are involved. Its slow drift repeats exactly once per loop, so the loop has no seam.
 
 ## Rules for new sounds
