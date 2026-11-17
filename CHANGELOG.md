@@ -6,6 +6,7 @@ This file follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and 
 
 ### Changed
 
+- **Real wind.** Wind is now a recording of a storm in a Swedish pine forest by W.carter (CC BY-SA 4.0, Wikimedia Commons) instead of synthesis. The *About* sheet links licenses that require it.
 - **Softer brown noise.** It is now deeper and calmer: a two-pole low-pass removes the hiss above a few hundred hertz, a gentle high-pass trims sub-bass that small speakers cannot play, and the tone drifts slowly so it breathes. The loop is 36 s instead of 24 s.
 
 ## 1.0.0 — 2026-11-17

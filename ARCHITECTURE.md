@@ -14,7 +14,7 @@ src/
     timer.ts      sleep-timer arithmetic
     i18n.ts       every user-facing string, English and Italian
   audio/
-    dsp.ts        seeded noise, seamless loops, the four synthesized sounds (pure, tested in Node)
+    dsp.ts        seeded noise, seamless loops, the synthesized sounds (pure, tested in Node)
     engine.ts     the Web Audio engine (browser only)
   ui/           React client components and hooks
     app.tsx       client gate, providers, shell, header, ambient glow
@@ -57,7 +57,7 @@ Graph: `voice gain` (one per sound) → `master` → `fade` (sleep timer) → `a
 - **Volume curve**: gain = slider^1.5, which makes each step of the slider sound even.
 - **Loops**: recordings are decoded, then `seamless()` blends their last *n* seconds into the first with an equal-power crossfade, so the buffer loops with no click. Each loop starts at a random offset.
 - **Events**: thunder plays its whole recording 1.5–4 s after it is switched on, then every 18–55 s, at 0.9–1.1× speed.
-- **Synthesis** (`dsp.ts`): brown noise is a leaky integrator, pink noise is Paul Kellet’s filter, waves are filtered noise with a swell/break/wash envelope whose brightness follows the swell, and wind is a band-pass whose centre drifts in gusts. Each renders 24–40 s of stereo, with independent noise per ear. Every envelope period divides the loop length exactly, so the crossfade joins identical moments.
+- **Synthesis** (`dsp.ts`): brown noise is a leaky integrator under a slowly drifting two-pole low-pass and a gentle high-pass, pink noise is Paul Kellet’s filter, and waves are filtered noise with a swell/break/wash envelope whose brightness follows the swell. Each renders 24–36 s of stereo, with independent noise per ear. Every envelope period divides the loop length exactly, so the crossfade joins identical moments.
 - **Safari**: `navigator.audioSession.type = "playback"` keeps sound on when the ringer switch is silent.
 
 ## Persistence

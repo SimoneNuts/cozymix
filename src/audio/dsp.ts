@@ -1,5 +1,5 @@
 /**
- * Plain sample math: seeded randomness, seamless loops and the four sounds
+ * Plain sample math: seeded randomness, seamless loops and the sounds
  * CozyMix synthesizes instead of downloading. Works on Float32Arrays only, so
  * Node tests can check it without a browser.
  *
@@ -66,7 +66,6 @@ export const LOOP_SECONDS: Record<Generator, number> = {
   brown: 36,
   pink: 24,
   waves: 36,
-  wind: 40,
 };
 const FADE_SECONDS = 2;
 
@@ -169,25 +168,6 @@ function makeVoice(
         wash += 0.08 * (white - wash);
         rumble = (rumble + 0.02 * white) / 1.02;
         return body * (0.15 + swell) + wash * 0.25 * swell + rumble * 1.2;
-      };
-    }
-    case "wind": {
-      // Band-passed noise whose centre and strength drift in slow gusts.
-      let low = 0;
-      let band = 0;
-      const phase = channel * 0.9;
-      return (_, t) => {
-        const gust =
-          0.55 +
-          0.3 * Math.sin((tau * t * 3) / period + phase) +
-          0.15 * Math.sin((tau * t * 7) / period + 1.3 + phase);
-        const centre = 220 + 520 * gust;
-        const f = 2 * Math.sin((Math.PI * centre) / sampleRate);
-        const white = random();
-        const high = white - low - 0.8 * band;
-        band += f * high;
-        low += f * band;
-        return band * (0.25 + gust) + low * 0.08;
       };
     }
   }

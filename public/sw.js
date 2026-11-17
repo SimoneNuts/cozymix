@@ -14,6 +14,7 @@ const CACHE = `${PREFIX}-v2`;
 const BASE = new URL(self.registration.scope).pathname.replace(/\/$/, "");
 const AUDIO = [
   "/audio/rain-window.mp3",
+  "/audio/wind-pine-forest.mp3",
   "/audio/thunder.mp3",
   "/audio/fireplace.mp3",
   "/audio/coffee-shop.mp3",

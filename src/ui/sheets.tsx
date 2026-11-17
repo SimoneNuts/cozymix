@@ -217,7 +217,14 @@ export function InfoSheet({ open, onClose }: { open: boolean; onClose: () => voi
               ) : (
                 t.info.original
               )}{" "}
-              · {sound.credit.license}
+              ·{" "}
+              {sound.credit.licenseUrl ? (
+                <a href={sound.credit.licenseUrl} target="_blank" rel="noreferrer">
+                  {sound.credit.license}
+                </a>
+              ) : (
+                sound.credit.license
+              )}
             </span>
           </li>
         ))}

@@ -17,12 +17,14 @@ export type SoundId =
   | "brown"
   | "pink";
 
-export type Generator = "brown" | "pink" | "waves" | "wind";
+export type Generator = "brown" | "pink" | "waves";
 
 export type Credit = {
   author: string;
-  license: "CC0 1.0" | "MIT";
+  license: "CC0 1.0" | "CC BY-SA 4.0" | "MIT";
   url?: string;
+  /** Link to the license text, for licenses that require one. */
+  licenseUrl?: string;
 };
 
 type Common = {
@@ -83,11 +85,17 @@ export const sounds: readonly Sound[] = [
   },
   {
     id: "wind",
-    kind: "generated",
-    generator: "wind",
+    kind: "loop",
+    file: "/audio/wind-pine-forest.mp3",
+    crossfade: 4,
     hue: 176,
     defaultVolume: 0.35,
-    credit: original,
+    credit: {
+      author: "W.carter",
+      license: "CC BY-SA 4.0",
+      url: "https://commons.wikimedia.org/wiki/File:Wind_in_Swedish_pine_forest_at_25_mps.ogg",
+      licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+    },
   },
   {
     id: "waves",

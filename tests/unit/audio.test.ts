@@ -50,7 +50,7 @@ test("seamless() leaves too-short input alone", () => {
   assert.deepEqual(seamless(short, 5), short);
 });
 
-for (const kind of ["brown", "pink", "waves", "wind"] as Generator[]) {
+for (const kind of ["brown", "pink", "waves"] as Generator[]) {
   test(`${kind}: stereo, clean levels, no DC, and a seamless loop`, () => {
     const channels = generate(kind, RATE, 3);
     assert.equal(channels.length, 2);
@@ -70,7 +70,7 @@ for (const kind of ["brown", "pink", "waves", "wind"] as Generator[]) {
 }
 
 test("generation is deterministic for a seed", () => {
-  const [a] = generate("wind", RATE, 7);
-  const [b] = generate("wind", RATE, 7);
+  const [a] = generate("waves", RATE, 7);
+  const [b] = generate("waves", RATE, 7);
   assert.deepEqual(a.slice(1000, 1100), b.slice(1000, 1100));
 });
