@@ -6,6 +6,7 @@ This file follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and 
 
 ### Added
 
+- **Three fans** for steady, sleep-friendly noise, all from the Work With Sounds archive (CC BY 4.0, via Wikimedia Commons): a ventilation fan in a Slovenian coal mine, a vacuum fan in a Swedish paper mill, and the cooker hood of a Brussels chip shop. Each is trimmed to its steady part and levelled with the other sounds.
 - **Stream.** A small brook trickling through a wood, recorded by FractalStudios (CC0, via Wikimedia Commons).
 
 ### Changed

@@ -22,6 +22,9 @@ const AUDIO = [
   "/audio/coffee-shop.mp3",
   "/audio/train.mp3",
   "/audio/nebulizer.wav",
+  "/audio/fan-mine.mp3",
+  "/audio/fan-paper-mill.mp3",
+  "/audio/cooker-hood.mp3",
 ];
 const SHELL = ["/", "/manifest.webmanifest", "/icons/icon-192.png", "/icons/icon-512.png"];
 const at = (path) => BASE + path;

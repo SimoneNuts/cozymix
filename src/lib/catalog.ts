@@ -15,13 +15,16 @@ export type SoundId =
   | "cafe"
   | "train"
   | "nebulizer"
+  | "fan"
+  | "mill"
+  | "hood"
   | "brown";
 
 export type Generator = "brown";
 
 export type Credit = {
   author: string;
-  license: "CC0 1.0" | "CC BY 3.0" | "CC BY-SA 4.0" | "MIT";
+  license: "CC0 1.0" | "CC BY 3.0" | "CC BY 4.0" | "CC BY-SA 4.0" | "MIT";
   url?: string;
   /** Link to the license text, for licenses that require one. */
   licenseUrl?: string;
@@ -63,6 +66,12 @@ const freesound = (author: string, id: number): Credit => ({
   url: `https://freesound.org/people/${author}/sounds/${id}/`,
 });
 const original: Credit = { author: "CozyMix", license: "MIT" };
+const workWithSounds = (author: string, file: string): Credit => ({
+  author: `${author} / Work With Sounds`,
+  license: "CC BY 4.0",
+  url: `https://commons.wikimedia.org/wiki/File:${file}`,
+  licenseUrl: "https://creativecommons.org/licenses/by/4.0/",
+});
 
 export const sounds: readonly Sound[] = [
   {
@@ -159,6 +168,33 @@ export const sounds: readonly Sound[] = [
     hue: 150,
     defaultVolume: 0.4,
     credit: original,
+  },
+  {
+    id: "fan",
+    kind: "loop",
+    file: "/audio/fan-mine.mp3",
+    crossfade: 3,
+    hue: 300,
+    defaultVolume: 0.4,
+    credit: workWithSounds("Technical Museum of Slovenia", "WWS_Ventilationfan.ogg"),
+  },
+  {
+    id: "mill",
+    kind: "loop",
+    file: "/audio/fan-paper-mill.mp3",
+    crossfade: 3,
+    hue: 75,
+    defaultVolume: 0.4,
+    credit: workWithSounds("Torsten Nilsson", "WWS_Vacuumfan.ogg"),
+  },
+  {
+    id: "hood",
+    kind: "loop",
+    file: "/audio/cooker-hood.mp3",
+    crossfade: 3,
+    hue: 350,
+    defaultVolume: 0.4,
+    credit: workWithSounds("La Fonderie", "WWS_Cookerhood.ogg"),
   },
   {
     id: "brown",

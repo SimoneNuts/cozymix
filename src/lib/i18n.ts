@@ -30,6 +30,9 @@ const en = {
     cafe: { name: "Café", hint: "Cups and soft voices" },
     train: { name: "Train", hint: "A seat by the window" },
     nebulizer: { name: "Nebulizer", hint: "A steady little hum" },
+    fan: { name: "Fan", hint: "Fresh air in a mine" },
+    mill: { name: "Paper mill", hint: "A deep, even hum" },
+    hood: { name: "Cooker hood", hint: "A Brussels chip shop" },
     brown: { name: "Brown noise", hint: "Deep and soft" },
   } satisfies Record<SoundId, SoundText>,
   scenes: {
@@ -153,6 +156,9 @@ const it: Messages = {
     cafe: { name: "Caffè", hint: "Tazzine e voci basse" },
     train: { name: "Treno", hint: "Un posto al finestrino" },
     nebulizer: { name: "Nebulizzatore", hint: "Un ronzio costante" },
+    fan: { name: "Ventola", hint: "Aria fresca in miniera" },
+    mill: { name: "Cartiera", hint: "Un ronzio profondo" },
+    hood: { name: "Cappa", hint: "Friggitoria a Bruxelles" },
     brown: { name: "Rumore marrone", hint: "Profondo e morbido" },
   },
   scenes: {

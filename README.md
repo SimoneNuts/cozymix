@@ -9,7 +9,7 @@
   <img src="docs/phone-light.png" alt="CozyMix on a phone in the light theme, in English" width="260">
 </p>
 
-**Sounds to feel at home.** An ambient sound mixer for focus, rest or sleep. It has rain on the window, a fireplace, a café, a night train, waves, a stream, wind and soft noise. Turn on the sounds you like, set each one's volume, and let everything else fade away.
+**Sounds to feel at home.** An ambient sound mixer for focus, rest or sleep. It has rain on the window, a fireplace, a café, a night train, waves, a stream, wind, steady machine fans and soft noise. Turn on the sounds you like, set each one's volume, and let everything else fade away.
 
 No account, no ads, no tracking. Everything stays on your device, and after the first visit it works offline too.
 
@@ -32,7 +32,7 @@ No account, no ads, no tracking. Everything stays on your device, and after the 
 
 ## The sounds
 
-Nine are real recordings, each CC0, CC BY, CC BY-SA or original. Brown noise is synthesized right in the browser. Sources and licenses are listed in [SOUND_SOURCES.md](SOUND_SOURCES.md).
+Twelve are real recordings, each CC0, CC BY, CC BY-SA or original. Brown noise is synthesized right in the browser. Sources and licenses are listed in [SOUND_SOURCES.md](SOUND_SOURCES.md).
 
 ## Development
 
