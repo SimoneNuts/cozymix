@@ -2,6 +2,18 @@
 
 This file follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and versions follow [Semantic Versioning](https://semver.org/).
 
+## 1.2.0 — 2026-11-17
+
+### Added
+
+- **Birdsong**: two minutes of a spring dawn chorus in Bourne, England, by Robert EA Harvey (CC BY-SA 4.0, via Wikimedia Commons), picked from a 38-minute recording where no cars pass.
+- **Cricket**: a cricket singing on a night in the hills of central Taiwan, by Jidanni (CC BY-SA 4.0, via Wikimedia Commons).
+
+### Changed
+
+- **Full rows everywhere.** With 15 sounds, pads use 3 columns on tablets and laptops and 5 on wide screens, and on phones the last pad spans the whole row. Scenes form three rows of three on wide screens. A test keeps it that way.
+- The *About* text mentions birdsong.
+
 ## 1.1.0 — 2026-11-17
 
 Real recordings instead of synthesis, new sounds, and a much lighter first visit.

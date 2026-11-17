@@ -1,5 +1,8 @@
 import { test, expect, type Page } from "@playwright/test";
+import { audioFiles } from "../../src/lib/catalog.ts";
 import { expectAudible, openApp, soundButton } from "./helpers";
+
+const RECORDINGS = audioFiles.length;
 
 test.use({ serviceWorkers: "allow" });
 test.skip(
@@ -24,13 +27,13 @@ test("the app opens offline, and a sound played once keeps working without a con
   await openApp(page);
   await waitForOfflineApp(page);
   // Nothing is downloaded up front: recordings are kept only once played.
-  await expect(page.locator(".offline-sounds")).toContainText("0 of 12 sounds are saved");
+  await expect(page.locator(".offline-sounds")).toContainText(`0 of ${RECORDINGS} sounds are saved`);
   await page.keyboard.press("Escape");
 
   await soundButton(page, "Fireplace").click();
   await expect(pad(page, "fireplace")).toHaveAttribute("data-state", "playing");
   await page.getByRole("button", { name: "About and settings" }).click();
-  await expect(page.locator(".offline-sounds")).toContainText("1 of 12 sounds are saved");
+  await expect(page.locator(".offline-sounds")).toContainText(`1 of ${RECORDINGS} sounds are saved`);
   await page.keyboard.press("Escape");
   await page.getByRole("button", { name: "Pause" }).click();
 
@@ -54,7 +57,7 @@ test("Download all sounds keeps every recording for offline use", async ({ page,
   await openApp(page);
   await waitForOfflineApp(page);
   await page.getByRole("button", { name: /^Download all sounds \(\d+ MB\)$/ }).click();
-  await expect(page.locator(".offline-sounds")).toHaveText("All 12 sounds are saved for offline use.", {
+  await expect(page.locator(".offline-sounds")).toHaveText(`All ${RECORDINGS} sounds are saved for offline use.`, {
     timeout: 60_000,
   });
   await expect(page.getByRole("button", { name: /Download all sounds/ })).toHaveCount(0);

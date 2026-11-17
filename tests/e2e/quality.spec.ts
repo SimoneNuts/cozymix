@@ -44,6 +44,30 @@ test("layouts fit from 320px phones to wide desktops", async ({ page }) => {
   }
 });
 
+test("every row of pads and scenes is full, at every width", async ({ page }) => {
+  await openApp(page, "./", { audio: false });
+  // Rows are full when the last item of each row reaches the grid's right edge.
+  const gaps = (selector: string) =>
+    page.locator(selector).evaluate((list) => {
+      const right = list.getBoundingClientRect().right;
+      const rows = new Map<number, number>();
+      for (const item of list.children) {
+        const box = item.getBoundingClientRect();
+        const top = Math.round(box.top);
+        rows.set(top, Math.max(rows.get(top) ?? 0, box.right));
+      }
+      return [...rows.values()].map((end) => Math.round(right - end));
+    });
+  for (const width of [320, 390, 768, 1024, 1440]) {
+    await page.setViewportSize({ width, height: 800 });
+    for (const gap of await gaps(".pads")) expect(gap, `pads at ${width}px`).toBeLessThanOrEqual(1);
+    // Scenes scroll sideways on narrow screens and form a grid from 900 px.
+    if (width >= 900) {
+      for (const gap of await gaps(".scenes")) expect(gap, `scenes at ${width}px`).toBeLessThanOrEqual(1);
+    }
+  }
+});
+
 test("touch targets are at least 44px", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 800 });
   await openApp(page, "./", { audio: false });

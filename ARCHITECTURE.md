@@ -90,6 +90,7 @@ The parsers never throw. Unknown sounds are dropped, levels are clamped, and inv
 
 ## Interface
 
+- **Grids**: pads use 2 columns on phones, 3 from 640 px and 5 from 1200 px, so 15 sounds fill every row; on phones an odd last pad spans the whole row. Scenes scroll sideways on phones and form a 3-column grid from 900 px (9 scenes, three rows). A Playwright test checks that every row is full at 320–1440 px, so adding a sound or a scene that breaks the rows fails it: change the column counts with it.
 - **Pads**: the toggle button (named after the sound, with `aria-pressed`) and a native range slider. The pad has `data-state` set to `off`, `loading`, `error`, `paused` or `playing`. The meter bars only animate when the state is `playing`, which means the engine is running and that sound’s buffer is ready.
 - **Dock**: fixed at the bottom, within thumb reach. On phones it has two rows: Play, title and timer on top, then master volume, Save and Share. On wide screens it is a single row. While sound plays, the Play button glows with the analyser level.
 - **Ambient glow**: up to four blurred radial gradients in the hues of the active sounds. They drift only while playing.

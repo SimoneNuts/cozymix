@@ -26,6 +26,8 @@ const en = {
     wind: { name: "Wind", hint: "Through the pines" },
     waves: { name: "Waves", hint: "A quiet shore" },
     stream: { name: "Stream", hint: "A brook in the woods" },
+    birds: { name: "Birdsong", hint: "A spring dawn chorus" },
+    crickets: { name: "Cricket", hint: "A night in the hills" },
     fireplace: { name: "Fireplace", hint: "Embers and crackle" },
     cafe: { name: "Café", hint: "Cups and soft voices" },
     train: { name: "Train", hint: "A seat by the window" },
@@ -123,7 +125,7 @@ const en = {
   info: {
     title: "About CozyMix",
     about:
-      "Layer rain, waves, a stream, a fire, a café, a train and steady fans. Everything stays on this device: no account, no ads, no tracking.",
+      "Layer rain, waves, a stream, birdsong, a fire, a café, a train and steady fans. Everything stays on this device: no account, no ads, no tracking.",
     shortcuts: "Space plays and pauses.",
     offline: "Offline",
     offlineReady: "The app opens without a connection.",
@@ -161,6 +163,8 @@ const it: Messages = {
     wind: { name: "Vento", hint: "Tra i pini" },
     waves: { name: "Onde", hint: "Una riva tranquilla" },
     stream: { name: "Ruscello", hint: "Acqua tra i sassi" },
+    birds: { name: "Uccellini", hint: "Il coro dell’alba" },
+    crickets: { name: "Grillo", hint: "Una notte in collina" },
     fireplace: { name: "Camino", hint: "Brace e scoppiettio" },
     cafe: { name: "Caffè", hint: "Tazzine e voci basse" },
     train: { name: "Treno", hint: "Un posto al finestrino" },
@@ -259,7 +263,7 @@ const it: Messages = {
   info: {
     title: "Su CozyMix",
     about:
-      "Sovrapponi pioggia, onde, un ruscello, il fuoco, un caffè, un treno e il ronzio delle ventole. Tutto resta su questo dispositivo: niente account, pubblicità o tracciamento.",
+      "Sovrapponi pioggia, onde, un ruscello, gli uccellini, il fuoco, un caffè, un treno e il ronzio delle ventole. Tutto resta su questo dispositivo: niente account, pubblicità o tracciamento.",
     shortcuts: "La barra spaziatrice avvia e mette in pausa.",
     offline: "Offline",
     offlineReady: "L’app si apre anche senza connessione.",

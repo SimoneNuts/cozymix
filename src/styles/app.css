@@ -303,6 +303,11 @@
   gap: 10px;
 }
 
+/* An odd number of pads in two columns: the last one takes the whole row. */
+.pads > li:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
 .pad {
   --fill-color: hsl(var(--hue) 75% var(--tint-fill));
   position: relative;
@@ -1005,8 +1010,13 @@
 /* ───────────── Wider screens ───────────── */
 
 @media (min-width: 640px) {
+  /* 3 columns up to 1199 px, then 5: with 15 sounds every row is full. */
   .pads {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .pads > li:last-child:nth-child(odd) {
+    grid-column: auto;
   }
 
   .scene {
@@ -1016,13 +1026,13 @@
 
 @media (min-width: 900px) {
   .pads {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 14px;
   }
 
+  /* 9 scenes: three full rows. */
   .scenes {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     overflow: visible;
     margin-inline: 0;
     padding-inline: 0;

@@ -35,6 +35,7 @@ Then wire the sound in. TypeScript reports each place you miss.
 3. `src/ui/icons.tsx`: add a 24 px line icon under the same id, stroke only, in the style of the others.
 4. `src/lib/catalog.ts`: update `AUDIO_MEGABYTES` if the total size of `public/audio` changes. A unit test fails if it is off. Nothing goes in `public/sw.js`: recordings are kept offline when played or downloaded.
 5. Optionally, add it to a scene in `scenes`.
+6. Check the grids: a Playwright test fails if a row of pads is not full at some width. The pads use 2, 3 and 5 columns (see *Grids* in ARCHITECTURE.md); with a new count, change the column counts in `src/styles/app.css` too. The same goes for scenes, which use 3 columns on wide screens.
 
 ## 4. Verify
 

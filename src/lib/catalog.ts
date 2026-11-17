@@ -11,6 +11,8 @@ export type SoundId =
   | "wind"
   | "waves"
   | "stream"
+  | "birds"
+  | "crickets"
   | "fireplace"
   | "cafe"
   | "train"
@@ -138,6 +140,38 @@ export const sounds: readonly Sound[] = [
     },
   },
   {
+    id: "birds",
+    kind: "loop",
+    file: "/audio/birds-dawn.mp3",
+    crossfade: 4,
+    hue: 55,
+    defaultVolume: 0.4,
+    credit: {
+      author: "Robert EA Harvey",
+      license: "CC BY-SA 4.0",
+      url: "https://commons.wikimedia.org/wiki/File:Dawn_Chorus_2020-05-06_0500.mp3",
+      licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+      // A two-minute excerpt of a 38-minute recording; see SOUND_SOURCES.md.
+      modified: true,
+    },
+  },
+  {
+    id: "crickets",
+    kind: "loop",
+    file: "/audio/cricket-night.mp3",
+    crossfade: 2,
+    hue: 245,
+    defaultVolume: 0.35,
+    credit: {
+      author: "Jidanni",
+      license: "CC BY-SA 4.0",
+      url: "https://commons.wikimedia.org/wiki/File:Ringing_cricket_winding_down.ogg",
+      licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
+      // Trimmed to skip two handling noises; see SOUND_SOURCES.md.
+      modified: true,
+    },
+  },
+  {
     id: "fireplace",
     kind: "loop",
     file: "/audio/fireplace.mp3",
@@ -226,7 +260,7 @@ export function isSoundId(id: string): id is SoundId {
  * Size of every recording together, in megabytes (10^6 bytes), as shown on
  * the "Download all sounds" button. A unit test checks it against the files.
  */
-export const AUDIO_MEGABYTES = 17;
+export const AUDIO_MEGABYTES = 19;
 
 /** Files to keep for offline use. Generated sounds need none. */
 export const audioFiles: readonly string[] = sounds.flatMap((sound) =>
